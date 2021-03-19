@@ -5,10 +5,10 @@
 replicaCount: 1
 
 image:
-  repository: sogno/pyvolt-service
+  repository: "sogno/pyvolt-service"
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: latest
+  tag: "demo.v1.0"
 
 imagePullSecrets: []
 nameOverride: ""
