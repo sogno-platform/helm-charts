@@ -1,0 +1,5 @@
+helm-extra-args: --timeout 800
+check-version-increment: true
+debug: true
+remote: origin
+target-branch: main
