@@ -1,0 +1,17 @@
+apiVersion: v1
+entries:
+  pyvolt-service:
+  - apiVersion: v2
+    appVersion: 1.0.0
+    created: "2021-03-19T19:07:04.103462859Z"
+    description: A Helm chart for Kubernetes
+    digest: c16b1df83483d4d8cd7d0a681991ac3c500ba648e405024c6b0f63a056bd5045
+    maintainers:
+    - email: jonas.baude@eonerc.rwth-aachen.de
+      name: Jonas Baude
+    name: pyvolt-service
+    type: application
+    urls:
+    - https://github.com/sogno-platform/helm-charts/releases/download/pyvolt-service-0.1.0/pyvolt-service-0.1.0.tgz
+    version: 0.1.0
+generated: "2021-03-19T19:07:04.103467959Z"
