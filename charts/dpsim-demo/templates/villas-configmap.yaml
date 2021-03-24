@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dpsim-demo-villas-configmap-{{ .Release.Name }}
+data:
+  Shmem_CIGRE_MV.conf: {{ .Files.Get "files/Shmem_CIGRE_MV.conf" | quote }}
+
