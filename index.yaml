@@ -1,5 +1,15 @@
 apiVersion: v1
 entries:
+  cim-service:
+  - apiVersion: v2
+    created: "2021-03-25T16:14:29.494949618Z"
+    description: A Helm chart for Kubernetes
+    digest: e694e8510b4e9db1d26496191b6d45c380eaa0bccccb928dcc97b66243774877
+    name: cim-service
+    type: application
+    urls:
+    - https://github.com/sogno-platform/helm-charts/releases/download/cim-service-0.1.0/cim-service-0.1.0.tgz
+    version: 0.1.0
   dpsim-demo:
   - apiVersion: v2
     appVersion: 0.0.9
@@ -13,6 +23,27 @@ entries:
     type: application
     urls:
     - https://github.com/sogno-platform/helm-charts/releases/download/dpsim-demo-0.1.0/dpsim-demo-0.1.0.tgz
+    version: 0.1.0
+  dpsim-service:
+  - apiVersion: v2
+    created: "2021-03-25T16:14:29.580563204Z"
+    description: A Helm chart for Kubernetes
+    digest: 3e2a62dba699bf34b4cccde499acb338968e21e5b737387081c80da10a1389fc
+    name: dpsim-service
+    type: application
+    urls:
+    - https://github.com/sogno-platform/helm-charts/releases/download/dpsim-service-0.1.0/dpsim-service-0.1.0.tgz
+    version: 0.1.0
+  pintura:
+  - apiVersion: v2
+    appVersion: latest
+    created: "2021-03-25T16:14:29.66594987Z"
+    description: A Helm chart for Kubernetes
+    digest: 55bfb0a018fdb3e0ffb87587ce0d4d97665e68820ceaf880879165267144ad8d
+    name: pintura
+    type: application
+    urls:
+    - https://github.com/sogno-platform/helm-charts/releases/download/pintura-0.1.0/pintura-0.1.0.tgz
     version: 0.1.0
   pyvolt-demo:
   - apiVersion: v2
@@ -42,4 +73,4 @@ entries:
     urls:
     - https://github.com/sogno-platform/helm-charts/releases/download/pyvolt-service-0.1.0/pyvolt-service-0.1.0.tgz
     version: 0.1.0
-generated: "2021-03-25T09:05:46.436051922Z"
+generated: "2021-03-25T16:14:29.665958871Z"
