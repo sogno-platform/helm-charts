@@ -37,6 +37,16 @@ entries:
   pintura:
   - apiVersion: v2
     appVersion: latest
+    created: "2021-03-30T08:35:15.942523179Z"
+    description: A Helm chart for Kubernetes
+    digest: 17ddaea3ffbf169b084990769e48b5a55d06ec37ea598c3bab6c75d852e04388
+    name: pintura
+    type: application
+    urls:
+    - https://github.com/sogno-platform/helm-charts/releases/download/pintura-0.1.1/pintura-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: latest
     created: "2021-03-25T16:14:29.66594987Z"
     description: A Helm chart for Kubernetes
     digest: 55bfb0a018fdb3e0ffb87587ce0d4d97665e68820ceaf880879165267144ad8d
@@ -73,4 +83,4 @@ entries:
     urls:
     - https://github.com/sogno-platform/helm-charts/releases/download/pyvolt-service-0.1.0/pyvolt-service-0.1.0.tgz
     version: 0.1.0
-generated: "2021-03-25T16:14:29.665958871Z"
+generated: "2021-03-30T08:35:15.94254308Z"
