@@ -1,18 +1,18 @@
-# Default values for dpsim-service.
+# Default values for dpsim-api.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
 replicaCount: 1
 
 image:
-  repository: docker.io/sogno/dpsim-service
+  repository: sogno/dpsim
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: latest
+  tag: api
 
 imagePullSecrets: []
-nameOverride: ""
-fullnameOverride: ""
+nameOverride: "dpsim-api"
+fullnameOverride: "dpsim-api"
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -38,7 +38,8 @@ securityContext: {}
 
 service:
   type: NodePort
-  port: 8080
+  port: 8000
+  targetPort: 8000
 
 ingress:
   enabled: false

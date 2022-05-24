@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "dpsim-service.fullname" . }}
+  name: {{ include "dpsim-api.fullname" . }}
   labels:
-    {{- include "dpsim-service.labels" . | nindent 4 }}
+    {{- include "dpsim-api.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "dpsim-service.selectorLabels" . | nindent 6 }}
+      {{- include "dpsim-api.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -18,13 +18,13 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "dpsim-service.selectorLabels" . | nindent 8 }}
+        {{- include "dpsim-api.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "dpsim-service.serviceAccountName" . }}
+      serviceAccountName: {{ include "dpsim-api.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
@@ -35,15 +35,15 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
-              containerPort: 8080
+              containerPort: 8000
               protocol: TCP
           livenessProbe:
             httpGet:
-              path: /ui
+              path: /api
               port: http
           readinessProbe:
             httpGet:
-              path: /ui
+              path: /api
               port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
