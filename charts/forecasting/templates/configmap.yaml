@@ -1,0 +1,27 @@
+{{- if .Values.configmap.create -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.configmap.name }}
+data:
+  app_name: "sognoforecasting-api"
+  app_description: "This API exposes the songo forecasting service."
+  app_maintainer: "Unknown maintainer"
+  app_maintainer_email: "unknown@email.com"
+  api_host: "0.0.0.0"
+  api_port: "8000"
+  api_enable_core_endpoints: "true"
+  api_cors_allowed_origins: "[]"
+  redis_host: "sogno-forecasting-redis-master"
+  redis_port: "6379"
+  redis_username: "default"
+  redis_password: "testpw" # should be in seceret storage
+  amqp_host: "sogno-forecasting-rabbitmq-headless"
+  amqp_port: "5672"
+  amqp_username: "user"
+  amqp_password: "testpw" # in secret storage
+  amqp_exchange: "forecastingjobs"
+  log_level: "DEBUG"
+  log_json_output: "false"
+  deployed: "true"
+{{- end }}

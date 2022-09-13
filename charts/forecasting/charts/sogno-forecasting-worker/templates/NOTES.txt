@@ -1,0 +1,1 @@
+1. The worker pod does not have any open ports
