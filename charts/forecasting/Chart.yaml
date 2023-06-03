@@ -28,8 +28,8 @@ dependencies:
     version: 10.2
     repository: https://charts.bitnami.com/bitnami
   - name: redis
-    version: 17.0
-    repository: https://charts.bitnami.com/bitnami
+    version: ~17.11
+    repository: oci://registry-1.docker.io/bitnamicharts
   - name: sogno-forecasting-worker
     version: 0.1
     repository: file://../sogno-forecasting-worker
