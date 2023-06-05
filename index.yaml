@@ -34,6 +34,17 @@ entries:
     urls:
     - https://github.com/sogno-platform/helm-charts/releases/download/dpsim-demo-0.1.0/dpsim-demo-0.1.0.tgz
     version: 0.1.0
+  dpsim-iec104-demo:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2023-06-05T09:27:09.140161874Z"
+    description: A Helm chart for Kubernetes
+    digest: 27f6c858c22cca441106b1a4d62d36a822e79c931be158c8c3cd18fa0b4a149c
+    name: dpsim-iec104-demo
+    type: application
+    urls:
+    - https://github.com/sogno-platform/helm-charts/releases/download/dpsim-iec104-demo-0.1.0/dpsim-iec104-demo-0.1.0.tgz
+    version: 0.1.0
   dpsim-service:
   - apiVersion: v2
     created: "2021-03-25T16:14:29.580563204Z"
@@ -55,6 +66,17 @@ entries:
     urls:
     - https://github.com/sogno-platform/helm-charts/releases/download/dpsim-worker-0.1.0/dpsim-worker-0.1.0.tgz
     version: 0.1.0
+  fledge-demo:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2023-06-05T09:27:09.346043763Z"
+    description: A Helm chart for Kubernetes
+    digest: 9495b965c08968f31705424077405e5c27d7ee4254e8494890b78d92b60158c1
+    name: fledge-demo
+    type: application
+    urls:
+    - https://github.com/sogno-platform/helm-charts/releases/download/fledge-demo-0.1.0/fledge-demo-0.1.0.tgz
+    version: 0.1.0
   pintura:
   - apiVersion: v2
     appVersion: latest
@@ -75,6 +97,21 @@ entries:
     type: application
     urls:
     - https://github.com/sogno-platform/helm-charts/releases/download/pintura-0.1.0/pintura-0.1.0.tgz
+    version: 0.1.0
+  pymfm:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2023-06-05T09:27:09.543377875Z"
+    dependencies:
+    - name: redis
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: ~17.11
+    description: A Helm chart for Kubernetes
+    digest: 9fb0ae502c80e45f0ef0c903e955d6e6f7ddbab20e179a4b35b93c9cf9624a63
+    name: pymfm
+    type: application
+    urls:
+    - https://github.com/sogno-platform/helm-charts/releases/download/pymfm-0.1.0/pymfm-0.1.0.tgz
     version: 0.1.0
   pyvolt-demo:
   - apiVersion: v2
@@ -104,4 +141,4 @@ entries:
     urls:
     - https://github.com/sogno-platform/helm-charts/releases/download/pyvolt-service-0.1.0/pyvolt-service-0.1.0.tgz
     version: 0.1.0
-generated: "2022-05-31T14:08:29.630703402Z"
+generated: "2023-06-05T09:27:09.543434176Z"
