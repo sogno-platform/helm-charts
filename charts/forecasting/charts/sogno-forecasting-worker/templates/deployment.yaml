@@ -1,0 +1,148 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "sogno-forecasting-worker.fullname" . }}-worker
+  labels:
+    {{- include "sogno-forecasting-worker.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "sogno-forecasting-worker.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "sogno-forecasting-worker.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "sogno-forecasting-worker.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: container
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          # livenessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: http
+          # readinessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: http
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          env:
+          - name: APP_NAME
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Values.configmap.name }}
+                key: app_name
+          - name: APP_DESCRIPTION
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Values.configmap.name }}
+                key: app_description
+          - name: APP_MAINTAINER
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Values.configmap.name }}
+                key: app_maintainer
+          - name: APP_MAINTAINER_EMAIL
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Values.configmap.name }}
+                key: app_maintainer_email
+          - name: API_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Values.configmap.name }}
+                key: api_host
+          - name: API_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Values.configmap.name }}
+                key: api_port
+          - name: API_ENABLE_CORE_ENDPOINTS
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Values.configmap.name }}
+                key: api_enable_core_endpoints
+          - name: API_CORS_ALLOWED_ORIGINS
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Values.configmap.name }}
+                key: api_cors_allowed_origins
+          - name: REDIS_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Values.configmap.name }}
+                key: redis_host
+          - name: REDIS_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Values.configmap.name }}
+                key: redis_port
+          - name: REDIS_USERNAME
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Values.configmap.name }}
+                key: redis_username
+          - name: AMQP_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Values.configmap.name }}
+                key: amqp_host
+          - name: AMQP_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Values.configmap.name }}
+                key: amqp_port
+          - name: AMQP_USERNAME
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Values.configmap.name }}
+                key: amqp_username
+          - name: AMQP_EXCHANGE
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Values.configmap.name }}
+                key: amqp_exchange
+          - name: LOG_LEVEL
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Values.configmap.name }}
+                key: log_level
+          - name: LOG_JSON_OUTPUT
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Values.configmap.name }}
+                key: log_json_output
+          - name: DEPLOYED
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Values.configmap.name }}
+                key: deployed
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

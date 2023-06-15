@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "sogno-forecasting-api.fullname" . }}
+  labels:
+    {{- include "sogno-forecasting-api.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      nodePort: {{ .Values.service.nodePort }}
+      targetPort: 8000
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "sogno-forecasting-api.selectorLabels" . | nindent 4 }}
