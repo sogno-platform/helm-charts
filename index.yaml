@@ -101,6 +101,20 @@ entries:
   pymfm:
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2023-07-12T13:41:37.445285342Z"
+    dependencies:
+    - name: redis
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: ~17.11
+    description: A Helm chart for Kubernetes
+    digest: 5a01f488a0dfe228112f072e471c71e4decff0f1beac7294e0bfe12603913af4
+    name: pymfm
+    type: application
+    urls:
+    - https://github.com/sogno-platform/helm-charts/releases/download/pymfm-0.2.0/pymfm-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2023-06-05T09:27:09.543377875Z"
     dependencies:
     - name: redis
@@ -141,4 +155,4 @@ entries:
     urls:
     - https://github.com/sogno-platform/helm-charts/releases/download/pyvolt-service-0.1.0/pyvolt-service-0.1.0.tgz
     version: 0.1.0
-generated: "2023-06-05T09:27:09.543434176Z"
+generated: "2023-07-12T13:41:37.445302942Z"
