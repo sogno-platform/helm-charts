@@ -82,4 +82,5 @@ tolerations: []
 affinity: {}
 
 minio:
+  fullnameOverride: "minio"
   defaultBuckets: "sogno-platform"
