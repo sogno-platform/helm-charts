@@ -4,6 +4,6 @@ dependencies:
   version: 12.1.3
 - name: file-service
   repository: file://../file-service
-  version: 0.1.0
-digest: sha256:848577eb4e8fc917786ff0e876faf11d542d0006453e461433f9f1d9bb4b9669
-generated: "2023-09-01T12:11:17.634601188Z"
+  version: 0.1.1
+digest: sha256:6f70c2f949bd77f7dd74434e1dfbe66c707972a9b639661fae5a2bd93b3e23e7
+generated: "2023-09-01T13:14:17.827108957Z"

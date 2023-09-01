@@ -80,4 +80,6 @@ tolerations: []
 affinity: {}
 
 redis:
+  auth:
+    enabled: false
   fullnameOverride: redis
