@@ -78,3 +78,6 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+redis:
+  fullnameOverride: redis

@@ -27,9 +27,6 @@ dependencies:
   - name: rabbitmq
     version: ~12.1
     repository: oci://registry-1.docker.io/bitnamicharts
-  - name: redis
-    version: ~17.11
-    repository: oci://registry-1.docker.io/bitnamicharts
   - name: file-service
     version: 0.1
     repository: file://../file-service
