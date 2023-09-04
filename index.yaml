@@ -10,6 +10,24 @@ entries:
     urls:
     - https://github.com/sogno-platform/helm-charts/releases/download/cim-service-0.1.0/cim-service-0.1.0.tgz
     version: 0.1.0
+  dpsim:
+  - apiVersion: v2
+    appVersion: 1.1.1
+    created: "2023-09-04T08:49:32.892541337Z"
+    dependencies:
+    - name: rabbitmq
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: ~12.1
+    - name: file-service
+      repository: file://../file-service
+      version: 0.1.1
+    description: A Helm chart for Kubernetes
+    digest: d0f12782fa2daefdbdd8f0e9498326d7fe97c2e94a428c6a7eb05ba1e3fff408
+    name: dpsim
+    type: application
+    urls:
+    - https://github.com/sogno-platform/helm-charts/releases/download/dpsim-0.1.0/dpsim-0.1.0.tgz
+    version: 0.1.0
   dpsim-api:
   - apiVersion: v2
     created: "2022-05-31T14:08:29.539605717Z"
@@ -66,6 +84,21 @@ entries:
     urls:
     - https://github.com/sogno-platform/helm-charts/releases/download/dpsim-worker-0.1.0/dpsim-worker-0.1.0.tgz
     version: 0.1.0
+  file-service:
+  - apiVersion: v2
+    appVersion: latest
+    created: "2023-09-04T08:49:33.083314402Z"
+    dependencies:
+    - name: minio
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: ~12.8
+    description: A Helm chart for Kubernetes
+    digest: 79211218d0b9da055b2e6ee23625f5ee17ea0b6d99cdb1cde227d981e191204f
+    name: file-service
+    type: application
+    urls:
+    - https://github.com/sogno-platform/helm-charts/releases/download/file-service-0.1.1/file-service-0.1.1.tgz
+    version: 0.1.1
   fledge-demo:
   - apiVersion: v2
     appVersion: 1.16.0
@@ -155,4 +188,4 @@ entries:
     urls:
     - https://github.com/sogno-platform/helm-charts/releases/download/pyvolt-service-0.1.0/pyvolt-service-0.1.0.tgz
     version: 0.1.0
-generated: "2023-07-12T13:41:37.445302942Z"
+generated: "2023-09-04T08:49:33.083327502Z"
