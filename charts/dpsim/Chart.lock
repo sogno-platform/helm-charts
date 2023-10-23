@@ -1,9 +1,15 @@
 dependencies:
+- name: dpsim-api
+  repository: file://./charts/dpsim-api
+  version: 0.1.0
+- name: dpsim-worker
+  repository: file://./charts/dpsim-worker
+  version: 0.1.0
 - name: rabbitmq
   repository: oci://registry-1.docker.io/bitnamicharts
   version: 12.1.3
 - name: file-service
   repository: file://../file-service
   version: 0.1.1
-digest: sha256:6f70c2f949bd77f7dd74434e1dfbe66c707972a9b639661fae5a2bd93b3e23e7
-generated: "2023-09-01T13:14:17.827108957Z"
+digest: sha256:be50fa4da1bc1c292ddaa4321b150e531e9e6cbba226bc87a39d39f8ec37f9f0
+generated: "2023-09-06T13:10:49.329934233Z"
