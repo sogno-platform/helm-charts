@@ -1,1 +1,3 @@
 # helm-charts
+
+Disclaimer: The Charts `file-service` and in consequence `dpsim` make use of MinIO distributed storage. MinIO(R) is a registered trademark of the MinIO Inc. in the US and other countries. SOGNO is not affiliated, associated, authorized, endorsed by, or in any way officially connected with MinIO Inc. MinIO(R) is licensed under GNU AGPL v3.0. This may have consequence for the in porduction deployment of these services as AGPL includes this kind of usage. This storage will likely be replaced with one that has a less strict license in the future.
