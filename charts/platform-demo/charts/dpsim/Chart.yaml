@@ -2,5 +2,5 @@ apiVersion: v2
 name: dpsim
 description: DPsim simulation with VILLASnode Kafka interface
 type: application
-version: 0.1.0
+version: 0.1.1
 appVersion: latest
