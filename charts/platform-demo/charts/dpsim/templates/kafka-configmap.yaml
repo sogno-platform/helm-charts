@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "dpsim-demo.fullname" . }}-configmap
+data:
+  configFile.conf: |
+    {
+        "type": {{ .Values.config.type | quote }},
+        "format": {{ .Values.config.format | quote }},
+        "server": {{ .Values.config.broker | quote }},
+        "protocol": {{ .Values.config.protocol | quote }},
+        "client_id": {{ .Values.config.clientId | quote }},
+        "out": {
+            "produce": {{ .Values.config.outputTopic | quote }}
+        }
+    }

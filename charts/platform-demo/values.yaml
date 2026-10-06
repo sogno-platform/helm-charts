@@ -1,0 +1,243 @@
+kafkaBroker: &kafkaBroker "my-cluster-kafka-bootstrap"
+kafkaPort: &kafkaPort "9092"
+kafkaBootstrap: &kafkaBootstrap "my-cluster-kafka-bootstrap:9092"
+influxdbHost: &influxdbHost "influxdb"
+influxdbPort: &influxdbPort "8086"
+influxdbUrl: &influxdbUrl "http://influxdb:8086"
+dpsimOutputTopic: &dpsimOutputTopic dpsim.powerflow.output
+pyvoltOutputTopic: &pyvoltOutputTopic se.results
+fullnameOverride: platform-demo
+
+
+kafka:
+  enabled: true
+  clusterName: my-cluster
+  version: "4.2.0"
+  metadataVersion: "4.2-IV0"
+  kraft:
+    enabled: true
+  nodePools:
+    enabled: true
+  nodePool:
+    nameSuffix: kafka-controller
+    replicas: 1
+    roles:
+      - controller
+      - broker
+    storage:
+      type: ephemeral
+      size: ""
+  listeners:
+    - name: plain
+      port: *kafkaPort
+      type: internal
+      tls: false
+  config:
+    offsets.topic.replication.factor: 1
+    transaction.state.log.replication.factor: 1
+    transaction.state.log.min.isr: 1
+    group.initial.rebalance.delay.ms: 0
+  entityOperator:
+    enabled: true
+  topics:
+    enabled: true
+    defaults:
+      partitions: 1
+      replicas: 1
+    list:
+      - name: *dpsimOutputTopic
+        topicName: *dpsimOutputTopic
+      - name: *pyvoltOutputTopic
+        topicName: *pyvoltOutputTopic
+
+
+dpsim:
+  fullnameOverride: platform-demo-dpsim
+  config:
+    type: "kafka"
+    format: "json"
+    protocol: "PLAINTEXT"
+    clientId: "dpsim-villas"
+    broker: *kafkaBootstrap
+    outputTopic: *dpsimOutputTopic
+  initContainers:
+    - name: wait-for-kafka
+      image: busybox
+      env:
+        - name: KAFKA_HOST
+          value: *kafkaBroker
+        - name: KAFKA_PORT
+          value: *kafkaPort
+      command:
+        - sh
+        - -c
+        - |
+          until nc -z -w1 "$KAFKA_HOST" "$KAFKA_PORT";
+          do
+            echo "waiting for kafka..."
+            sleep 2
+          done
+
+
+pyvolt:
+  initContainers:
+    - name: wait-for-kafka
+      image: busybox
+      env:
+        - name: KAFKA_HOST
+          value: *kafkaBroker
+        - name: KAFKA_PORT
+          value: *kafkaPort
+      command:
+        - sh
+        - -c
+        - |
+          until nc -z -w1 "$KAFKA_HOST" "$KAFKA_PORT";
+          do
+            echo "waiting for kafka..."
+            sleep 2
+          done
+  image:
+    repository: pyvolt-kafka-service
+    tag: latest
+    pullPolicy: Never
+  kafka:
+    bootstrap: *kafkaBootstrap
+    inputTopic: *dpsimOutputTopic
+    outputTopic: *pyvoltOutputTopic  
+  resources:
+    memory: 1Gi
+  replicaCount: 1
+
+
+grafana:
+  fullnameOverride: grafana
+  service:
+    type: NodePort
+    nodePort: 31230
+  adminUser: demo
+  adminPassword: demo
+  datasources:
+    datasources.yaml:
+      apiVersion: 1
+      datasources:
+      - name: InfluxDB
+        type: influxdb
+        url: *influxdbUrl
+        access: proxy
+        database: telegraf
+        user: telegraf
+        password: telegraf
+        jsonData:
+          httpMode: GET
+  containerSecurityContext:
+    seccompProfile: null
+  sidecar:
+    securityContext:
+      seccompProfile: null
+    dashboards:
+      enabled: true
+      label: grafana_dashboard
+  downloadDashboards:
+    securityContext:
+      seccompProfile: null
+  initChownData:
+    securityContext:
+      seccompProfile: null
+    
+
+
+pintura:
+  fullnameOverride: platform-demo-pintura
+  service:
+    type: NodePort
+    nodePort: 31234
+  image:
+    repository: sogno/pintura
+    pullPolicy: IfNotPresent
+    tag: latest
+
+
+influxdb:
+  fullnameOverride: influxdb
+  setDefaultUser:
+    enabled: true
+  persistence:
+    enabled: true
+    size: 2Gi
+    user:
+      username: admin
+
+
+telegraf:
+  fullnameOverride: telegraf
+  initContainers:
+    - name: wait-for-kafka
+      image: busybox
+      env:
+        - name: KAFKA_HOST
+          value: *kafkaBroker
+        - name: KAFKA_PORT
+          value: *kafkaPort
+      command:
+        - sh
+        - -c
+        - |
+          until nc -z -w1 "$KAFKA_HOST" "$KAFKA_PORT";
+          do
+            echo "waiting for kafka..."
+            sleep 2
+          done
+    - name: wait-for-influxdb
+      image: busybox
+      env:
+        - name: INFLUXDB_HOST
+          value: *influxdbHost
+        - name: INFLUXDB_PORT
+          value: *influxdbPort
+      command:
+        - sh
+        - -c
+        - |
+          until nc -w1 "$INFLUXDB_HOST" "$INFLUXDB_PORT" </dev/null;
+          do
+            echo "waiting for influxdb"
+            sleep 2
+          done
+  config:
+    outputs:
+      - influxdb:
+          urls:
+            - *influxdbUrl
+          database: "telegraf"
+          skip_database_creation: false
+          username: "telegraf"
+          password: "telegraf"
+    inputs:
+      - kafka_consumer:
+          brokers:
+            - *kafkaBootstrap
+          topics:
+            - *dpsimOutputTopic
+          client_id: "telegraf-dpsim"
+          version: "3.0.0"
+          data_format: "json"
+          name_override: "dpsim_powerflow"
+      - kafka_consumer:
+          brokers:
+            - *kafkaBootstrap
+          topics:
+            - *pyvoltOutputTopic
+          client_id: "telegraf-se"
+          version: "3.0.0"
+          data_format: "json"
+          name_override: "se_results"
+      - statsd:
+          service_address: ":8125"
+          percentiles:
+            - 50
+            - 95
+            - 99
+          metric_separator: "_"
+          allowed_pending_messages: 10000
+          percentile_limit: 1000

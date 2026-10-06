@@ -1,0 +1,51 @@
+{{- if .Values.kafka.enabled }}
+apiVersion: kafka.strimzi.io/v1
+kind: KafkaNodePool
+metadata:
+  name: {{ .Values.kafka.nodePool.nameSuffix }}
+  labels:
+    strimzi.io/cluster: {{ .Values.kafka.clusterName }}
+spec:
+  replicas: {{ .Values.kafka.nodePool.replicas }}
+  roles:
+{{- range .Values.kafka.nodePool.roles }}
+    - {{ . }}
+{{- end }}
+  storage:
+    type: {{ .Values.kafka.nodePool.storage.type }}
+{{- if .Values.kafka.nodePool.storage.size }}
+    size: {{ .Values.kafka.nodePool.storage.size }}
+{{- end }}
+
+---
+
+apiVersion: kafka.strimzi.io/v1
+kind: Kafka
+metadata:
+  name: {{ .Values.kafka.clusterName }}
+{{- if or .Values.kafka.kraft.enabled .Values.kafka.nodePools.enabled }}
+  annotations:
+{{- if .Values.kafka.nodePools.enabled }}
+    strimzi.io/node-pools: enabled
+{{- end }}
+{{- if .Values.kafka.kraft.enabled }}
+    strimzi.io/kraft: enabled
+{{- end }}
+{{- end }}
+spec:
+  kafka:
+    version: {{ .Values.kafka.version | quote }}
+    metadataVersion: {{ .Values.kafka.metadataVersion | quote }}
+    listeners:
+{{- range .Values.kafka.listeners }}
+      - name: {{ .name }}
+        port: {{ .port | int }}
+        type: {{ .type }}
+        tls: {{ .tls }}
+{{- end }}
+    config:
+{{- toYaml .Values.kafka.config | nindent 6 }}
+{{- if .Values.kafka.entityOperator.enabled }}
+  entityOperator: {}
+{{- end }}
+{{- end }}

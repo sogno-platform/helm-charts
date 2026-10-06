@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "platform-demo.pyvolt.fullname" . }}
+spec:
+  replicas: {{ .Values.pyvolt.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "platform-demo.pyvolt.fullname" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "platform-demo.pyvolt.fullname" . }}
+    spec:
+      {{- if .Values.pyvolt.initContainers }}
+      initContainers:
+        {{- toYaml .Values.pyvolt.initContainers | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: {{ include "platform-demo.pyvolt.fullname" . }}
+          image: "{{ .Values.pyvolt.image.repository }}:{{ .Values.pyvolt.image.tag }}"
+          imagePullPolicy: "{{ .Values.pyvolt.image.pullPolicy }}"
+          envFrom:
+            - configMapRef:
+                name: {{ include "platform-demo.pyvolt.fullname" . }}-configmap

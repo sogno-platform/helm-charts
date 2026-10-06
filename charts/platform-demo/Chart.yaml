@@ -1,0 +1,28 @@
+apiVersion: v2
+name: platform-demo
+description: A demo showcasing capabilities of SOGNO project. (DPsim, Pyvolt, Pintura, etc.)
+type: application
+
+version: 0.1.0
+
+dependencies:
+
+  - name: influxdb
+    version: "4.12.5"
+    repository: https://helm.influxdata.com/
+
+  - name: telegraf
+    version: "1.8.73"
+    repository: https://helm.influxdata.com/
+
+  - name: grafana
+    version: "8.5.1"
+    repository: https://grafana.github.io/helm-charts/
+
+  - name: pintura
+    repository: "file://charts/pintura"
+    version: "0.1.1"
+  
+  - name: dpsim
+    repository: "file://charts/dpsim"
+    version: "0.1.0"

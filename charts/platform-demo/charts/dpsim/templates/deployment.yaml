@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "dpsim-demo.fullname" . }}
+  labels:
+    {{- include "dpsim-demo.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "dpsim-demo.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "dpsim-demo.selectorLabels" . | nindent 8 }}
+    spec:
+      securityContext:
+        runAsUser: {{ .Values.securityContext.runAsUser }}
+      
+      {{- with .Values.initContainers }}
+      initContainers:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          securityContext:
+            privileged: {{ .Values.securityContext.privileged }}
+            allowPrivilegeEscalation: {{ .Values.securityContext.allowPrivilegeEscalation }}
+          env:
+            - name: DPSIM_SIMULATION_LOOP
+              value: {{ .Values.simulationLoop | quote }}
+            - name: DPSIM_SIMULATION_FILE
+              value: {{ .Values.simulationFile | quote }}
+            - name: CONFIG_FILE
+              value: {{ .Values.configFile | quote }}
+          resources:
+            requests:
+              hugepages-2Mi: {{ index .Values.resources.requests "hugepages-2Mi" | quote }}
+              memory: {{ .Values.resources.requests.memory | quote }}
+            limits:
+              hugepages-2Mi: {{ index .Values.resources.limits "hugepages-2Mi" | quote }}
+              memory: {{ .Values.resources.limits.memory | quote }}
+          volumeMounts:
+            - name: config
+              mountPath: {{ .Values.configFile | quote }}
+              subPath: configFile.conf
+      volumes:
+        - name: config
+          configMap:
+            name: {{ include "dpsim-demo.fullname" . }}-configmap
+        

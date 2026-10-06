@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name:  {{ include "platform-demo.pyvolt.fullname" . }}-configmap
+data:
+  KAFKA_BOOTSTRAP: {{ .Values.pyvolt.kafka.bootstrap | quote }}
+  KAFKA_INPUT_TOPIC: {{ .Values.pyvolt.kafka.inputTopic | quote }}
+  KAFKA_OUTPUT_TOPIC: {{ .Values.pyvolt.kafka.outputTopic | quote }}
+  CIM_DATA_DIR: "/data"
+  MEAS_CONFIG_FILE2: "/data/Measurement_config2.json"
+  MEAS_CONFIG_FILE3: "/data/Measurement_config3.json"
+  BASE_APPARENT_POWER: "25.0"
+  LOG_LEVEL: "INFO"

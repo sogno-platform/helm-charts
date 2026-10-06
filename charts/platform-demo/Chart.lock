@@ -1,0 +1,18 @@
+dependencies:
+- name: influxdb
+  repository: https://helm.influxdata.com/
+  version: 4.12.5
+- name: telegraf
+  repository: https://helm.influxdata.com/
+  version: 1.8.73
+- name: grafana
+  repository: https://grafana.github.io/helm-charts/
+  version: 8.5.1
+- name: pintura
+  repository: file://charts/pintura
+  version: 0.1.1
+- name: dpsim
+  repository: file://charts/dpsim
+  version: 0.1.0
+digest: sha256:37cb38e17ec5678fcd3a5db5453c832b58488fe49bea58c28a7f156fe528724c
+generated: "2026-07-28T10:09:50.240894814Z"

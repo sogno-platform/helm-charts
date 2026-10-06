@@ -1,0 +1,38 @@
+replicaCount: 1
+
+image:
+  repository: dpsim-kafka-service
+  pullPolicy: Never
+  tag: "latest"
+
+fullnameOverride: ""
+
+configFile: "/config/configFile.conf"
+
+simulationFile: "/default_simulation.py"
+
+simulationLoop: "true"
+
+resources:
+  requests:
+    memory: 2Gi
+    hugepages-2Mi: 256Mi
+  limits:
+    memory: 2Gi
+    hugepages-2Mi: 256Mi
+
+securityContext:
+  privileged: true
+  allowPrivilegeEscalation: true
+  runAsUser: 0
+
+initContainers: []
+
+config:
+  type: ""
+  format: ""
+  protocol: ""
+  clientId: ""
+  outputTopic: ""
+  broker: ""
+

@@ -1,0 +1,22 @@
+{{- if .Values.kafka.topics.enabled }}
+
+{{- range .Values.kafka.topics.list }}
+
+apiVersion: kafka.strimzi.io/v1
+kind: KafkaTopic
+
+metadata:
+  name: {{ .name }}
+  labels:
+    strimzi.io/cluster: {{ $.Values.kafka.clusterName }}
+
+spec:
+  topicName: {{ .topicName }}
+
+  partitions: {{ .partitions | default $.Values.kafka.topics.defaults.partitions }}
+
+  replicas: {{ .replicas | default $.Values.kafka.topics.defaults.replicas }}
+
+{{- end }}
+
+{{- end }}
