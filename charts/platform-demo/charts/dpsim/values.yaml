@@ -1,8 +1,8 @@
 replicaCount: 1
 
 image:
-  repository: dpsim-kafka-service
-  pullPolicy: Never
+  repository: ghcr.io/sogno-platform/dpsim/example-kafka-service:latest
+  pullPolicy: IfNotPresent
   tag: "latest"
 
 fullnameOverride: ""
