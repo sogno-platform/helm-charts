@@ -3,7 +3,7 @@ name: platform-demo
 description: A demo showcasing capabilities of SOGNO project. (DPsim, Pyvolt, Pintura, etc.)
 type: application
 
-version: 0.1.0
+version: 0.1.1
 
 dependencies:
 
