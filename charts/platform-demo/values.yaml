@@ -98,7 +98,7 @@ pyvolt:
             sleep 2
           done
   image:
-    repository: pyvolt-kafka-service
+    repository: docker pull ghcr.io/sogno-platform/pyvolt/example-kafka-service
     tag: latest
     pullPolicy: Never
   kafka:
